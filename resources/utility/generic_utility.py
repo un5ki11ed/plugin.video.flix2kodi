@@ -137,7 +137,9 @@ def get_setting(name):
         else:
             ret = test_settings[name]
     return ret
-
+def get_boolean(name):
+    bool = get_setting(name)
+    return bool == 'true'
 
 def set_setting(name, value):
     if not test:
