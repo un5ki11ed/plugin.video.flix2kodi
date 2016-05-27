@@ -66,7 +66,8 @@ def viewing_activity_matches(video_type):
         vjsn["seriesTitle"] = metadatas[video_id]["seriesTitle"]
         vjsn["dateStr"] = metadatas[video_id]["dateStr"]
         parsed = video_parser.parse_video(vjsn, video_id)
-        rets.append(parsed)
+        if is_age_appropriate(parsed):
+            rets.append(parsed)
 
     return rets
 
@@ -87,7 +88,8 @@ def videos_in_list(list_to_browse, page):
     for ref in list:
         video_id, vjsn = deref(list[ref], ret)
         parsed = video_parser.parse_video(vjsn, video_id)
-        rets.append(parsed)
+        if is_age_appropriate(parsed):
+            rets.append(parsed)
     return rets
 
 def videos_in_genre(genre_to_browse, page):
@@ -107,7 +109,8 @@ def videos_in_genre(genre_to_browse, page):
     for ref in sus:
         video_id, vjsn = deref(sus[ref], ret)
         parsed = video_parser.parse_video(vjsn, video_id)
-        rets.append(parsed)
+        if is_age_appropriate(parsed):
+            rets.append(parsed)
     return rets
 
 def videos_in_search(search_str):
@@ -124,7 +127,8 @@ def videos_in_search(search_str):
     for video_ref in search_node:
         video_id, vjsn = deref(search_node[video_ref], ret)
         parsed = video_parser.parse_video(vjsn, video_id)
-        rets.append(parsed)
+        if is_age_appropriate(parsed):
+            rets.append(parsed)
     return rets
 
 def get_viewing_activity_title(item):
@@ -343,3 +347,14 @@ def track_id_list(list):
     track_ids = lst.get('trackIds')
     track_id = track_ids.get('trackId')
     return track_id
+
+def is_age_appropriate(item):
+    if generic_utility.get_boolean('filter_age'):
+        age = eval(generic_utility.get_setting('age'))
+        rating = eval(item.get('mpaa'))
+        if rating > age:
+            return False
+        else:
+            return True
+    else:
+        True

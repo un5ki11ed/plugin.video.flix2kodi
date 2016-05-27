@@ -33,4 +33,9 @@
         <setting label="14002" type="action" action="RunPlugin(plugin://plugin.video.flix2kodi/?mode=delete_cookies)"/>
         <setting label="14003" type="action" action="RunPlugin(plugin://plugin.video.flix2kodi/?mode=reset_addon)"/>
     </category>
+    <category label="15000">
+        <setting id="filter_age" type="bool" label="15010" default="false" />
+        <setting id="age" type="number" label="15020" default="18" visible="eq(-1,true)"/>
+        <setting id="fsk_default" type="labelenum" label="15030" lvalues="15035|15031|15032|15033|15034" visible="eq(-2,true)"/>
+    </category>
 </settings>

@@ -152,6 +152,42 @@ msgctxt "#14003"
 msgid "Reset Addon"
 msgstr ""
 
+msgctxt "#15000"
+msgid "Age filtering"
+msgstr ""
+
+msgctxt "#15010"
+msgid "Filter content by age"
+msgstr ""
+
+msgctxt "#15020"
+msgid "Age"
+msgstr ""
+
+msgctxt "#15030"
+msgid "Default age"
+msgstr ""
+
+msgctxt "#15031"
+msgid "0"
+msgstr ""
+
+msgctxt "#15032"
+msgid "6"
+msgstr ""
+
+msgctxt "#15033"
+msgid "12"
+msgstr ""
+
+msgctxt "#15034"
+msgid "16"
+msgstr ""
+
+msgctxt "#15035"
+msgid "18"
+msgstr ""
+
 msgctxt "#30100"
 msgid "Movies"
 msgstr ""

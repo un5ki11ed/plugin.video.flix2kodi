@@ -18,6 +18,9 @@ def get_mpaa(jsn):
     maturity = jsn.get('maturity', {})
     rating = maturity.get('rating', {})
     value = rating.get('value')
+    if(generic_utility.get_boolean('filter_age')):
+        if not value or value not in ('0', '6', '12', '16', '18'):
+            value=generic_utility.get_setting('fsk_default')
     return value
 
 def extract_thumb_url(jsn):
