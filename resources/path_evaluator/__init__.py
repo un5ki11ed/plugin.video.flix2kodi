@@ -88,15 +88,11 @@ def path(type, *parms):
 
 def filter_empty(jsn):
     for key in jsn.keys():
-        if type(jsn[key]) == dict and '$type' in jsn[key] and jsn[key]['$type'] == 'sentinel':
-            del jsn[key]
-        elif type(jsn[key]) == dict:
-            filter_empty(jsn[key])
-
-def child(chld, jsn):
-    if not chld in jsn:
-        raise ValueError(str(chld)+' not found in: '+str(jsn))
-    return jsn[chld]
+        if type(jsn[key]) == dict:
+            if '$type' in jsn[key] and jsn[key]['$type'] == 'sentinel':
+                del jsn[key]
+            else:
+                filter_empty(jsn[key])
 
 def deref(ref, jsn):
     val = jsn

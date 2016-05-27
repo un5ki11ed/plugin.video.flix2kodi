@@ -8,7 +8,7 @@ import add
 from resources import connect
 from resources.path_evaluator.types import lolomos
 from resources.utility import generic_utility
-from resources.path_evaluator import req_path, CacheMissException, child
+from resources.path_evaluator import req_path, CacheMissException
 
 plugin_handle = int(sys.argv[1])
 
@@ -48,7 +48,7 @@ def main(video_type):
     if video_type != 'dynamic' and generic_utility.get_setting('is_kid') == 'false':
         root_list = lolomos.get_root_list()
         mylist = lolomos.get_mylist(root_list)
-        add.directory(child('displayName', mylist[1]), 'list?&mylist', 'list_videos', '', video_type)
+        add.directory(mylist[1].get('displayName'), 'list?&mylist', 'list_videos', '', video_type)
 
     add.directory(generic_utility.get_string(30109), '', 'search', '', video_type)
     xbmcplugin.endOfDirectory(plugin_handle, cacheToDisc=False)

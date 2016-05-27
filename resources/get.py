@@ -5,7 +5,7 @@ import time
 import requests
 import collections
 
-from resources.path_evaluator import path, from_to, req_path, filter_empty, child, deref
+from resources.path_evaluator import path, from_to, req_path, filter_empty, deref
 
 test = False
 try:
@@ -57,7 +57,7 @@ def viewing_activity_matches(video_type):
     path4 = path('"videos"', '[' + videos_str + ']', video_infos4)
     ret = req_path(path1, path2, path3, path4)
     filter_empty(ret)
-    videos = child('videos', ret)
+    videos = ret.get('videos')
     rets = []
 
     for video_id in metadatas:
@@ -81,8 +81,8 @@ def videos_in_list(list_to_browse, page):
     path4 = path('"lists"', '"' + list_to_browse + '"', from_to(off_from, off_to), video_infos4)
     ret = req_path(path1, path2, path3, path4)
     filter_empty(ret)
-    lists = child('lists', ret)
-    list = child(list_to_browse, lists)
+    lists = ret.get('lists')
+    list = lists.get(list_to_browse)
     rets = []
     for ref in list:
         video_id, vjsn = deref(list[ref], ret)
@@ -100,9 +100,9 @@ def videos_in_genre(genre_to_browse, page):
     path4 = path('"genres"', '"' + genre_to_browse + '"', '"su"', from_to(off_from, off_to), video_infos4)
     ret = req_path(path1, path2, path3, path4)
     filter_empty(ret)
-    gnrs = child('genres', ret)
-    gnre = child(genre_to_browse, gnrs)
-    sus = child('su', gnre)
+    gnrs = ret.get('genres')
+    gnre = gnrs.get(genre_to_browse)
+    sus = gnre.get('su')
     rets = []
     for ref in sus:
         video_id, vjsn = deref(sus[ref], ret)
@@ -117,8 +117,8 @@ def videos_in_search(search_str):
     path4 = path('"search"', '"' + search_str + '"', from_to(0,99), video_infos4)
     ret = req_path(path1, path2, path3, path4)
     filter_empty(ret)
-    search = child('search', ret)
-    search_node = child(search_str, search)
+    search = ret.get('search')
+    search_node = search.get(search_str)
 
     rets = []
     for video_ref in search_node:
@@ -338,8 +338,8 @@ def video_playback_info(video_datas):
 
 def track_id_list(list):
     jsn = req_path(path('"lists"', '"%s"' % list, '"trackIds"'))
-    lsts = child('lists', jsn)
-    lst = child(list, lsts)
-    track_ids = child('trackIds', lst)
-    track_id = child('trackId', track_ids)
+    lsts = jsn.get('lists')
+    lst = lsts.get(list)
+    track_ids = lst.get('trackIds')
+    track_id = track_ids.get('trackId')
     return track_id
