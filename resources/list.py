@@ -200,7 +200,7 @@ def superbrowse():
         if 'TV' in category_name:
             video_type='show'
         elif 'Series' in category_name:
-            video_tyoe='show'
+            video_type='show'
         else:
             video_type='movie'
 
