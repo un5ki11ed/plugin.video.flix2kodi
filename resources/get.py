@@ -357,4 +357,4 @@ def is_age_appropriate(item):
         else:
             return True
     else:
-        True
+        return True
