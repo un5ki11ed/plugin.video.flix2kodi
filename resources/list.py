@@ -25,6 +25,7 @@ def videos(url, video_type, offset, run_as_widget=False):
 
     list_id = None
     genre_id = None
+    video_id = None
     if 'genre' in url:
         genre_id = url.split('?')[1]
     elif 'list?' in url:
@@ -34,12 +35,16 @@ def videos(url, video_type, offset, run_as_widget=False):
             list_id = lolomos.get_mylist(root_list)[0]
         else:
             list_id = data
+    elif 'video_id' in url:
+        video_id = url.split('?')[1]
 
     video_metadata = None
     if list_id:
         video_metadata = get.videos_in_list(list_id, page)
     elif genre_id:
         video_metadata = get.videos_in_genre(genre_id, page)
+    elif video_id:
+        video_metadata = get.similars(video_id, page)
 
     if video_metadata:
         add_videos_to_directory(loading_progress, run_as_widget, video_metadata, video_type, page, url)
@@ -108,7 +113,7 @@ def add_videos_to_directory(loading_progress, run_as_widget, video_metadatas, vi
     else:
         xbmcplugin.addSortMethod(plugin_handle, xbmcplugin.SORT_METHOD_LABEL)
     
-    if page is not None and (not url or 'list_viewing_activity' not in url) and len(video_metadatas) == items_per_page:
+    if (not url or 'list_viewing_activity' not in url) and len(video_metadatas) == items_per_page:
         add.add_next_item(page + 1, url, video_type, 'list_videos')
 
 

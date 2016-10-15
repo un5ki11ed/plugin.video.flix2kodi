@@ -92,6 +92,26 @@ def videos_in_list(list_to_browse, page):
             rets.append(parsed)
     return rets
 
+def similars(video_id, page):
+	items_per_page = int(generic_utility.get_setting('items_per_page'))
+	off_from = page * items_per_page
+	off_to = off_from + items_per_page - 2
+	s1 = '["availability","bookmarkPosition","creditsOffset","current","details","episodeCount","hd","maturity","queue","releaseYear","requestId","runtime",'\
+		'"seasonCount","seasonList","showMemberType","summary","title","userRating","watched"]'
+	s2 = '"boxarts",["_665x375","_342x192"],"jpg"'
+	p1 = path('"videos"', '"' + video_id + '"', '"similars"', from_to(off_from, off_to), s1)
+	p2 = path('"videos"', '"' + video_id + '"', '"similars"', from_to(off_from, off_to), s2)
+	ret = req_path(p1, p2)
+	filter_empty(ret)
+	vids = ret.get('videos')
+	rets = []
+	for vid in vids:
+		parsed = video_parser.parse_video(vids[vid], vid)
+		if is_age_appropriate(parsed):
+			rets.append(parsed)
+	return rets
+	
+
 def videos_in_genre(genre_to_browse, page):
     items_per_page = int(generic_utility.get_setting('items_per_page'))
     off_from = page * items_per_page
