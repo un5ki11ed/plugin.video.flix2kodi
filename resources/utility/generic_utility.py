@@ -35,8 +35,8 @@ activity_url = '%s/viewingactivity/%s?_retry=0&authURL=%s'
 
 # post data information
 
-movie_genre = '{"paths":[["genreList",{"from":0,"to":24},["id","menuName"]]],"authURL":"%s"}'
-series_genre = '{"paths":[["genres",83,"subgenres",{"from":0,"to":20},"summary"]],"authURL":"%s"}'
+movie_genre = '{"paths":[["genreList",{"from":0,"to":24},["id","name"]]],"authURL":"%s"}'
+series_genre = '{"paths":[["genres",83,"subgenres",{"from":0,"to":20},["id", "name"]]],"authURL":"%s"}'
 video_playback_info = '{"paths": [["videos",[%s],["bookmarkPosition","runtime","summary"]]],"authURL":"%s"}'
 
 

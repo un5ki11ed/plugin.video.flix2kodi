@@ -300,20 +300,21 @@ def extended_artwork(title,year,type,id):
     return result
 
 def genre_data(video_type):
-    match = []
+	match = []
 
-    content = genre_info(video_type)
+	content = genre_info(video_type)
 
-    matches = json.loads(content)['value']['genres']
-    for item in matches:
-        try:
-            match.append((unicode(matches[item]['id']), matches[item]['menuName']))
-        except Exception:
-            try:
-                match.append((unicode(matches[item]['summary']['id']), matches[item]['summary']['menuName']))
-            except Exception:
-                pass
-    return match
+	matches = json.loads(content)['value']['genres']
+	filter_empty(matches)
+	#genre data for show subgenres
+	if len(matches)==1:
+		matches = matches['83']['subgenres']
+	
+	for key in matches:
+		item = matches[key]
+		if item.has_key('id') and item.has_key('name'):
+			match.append((unicode(item['id']), item['name']))
+	return match
 
 
 def series_info(series_id):
