@@ -22,6 +22,7 @@ def req_path(*paths):
         post += curpath+','
     post = post[:-1]
     post += '],"authURL":"%s"}' % auth_url
+    post = json.loads(post)
 
     content = connect.load_netflix_site(generic_utility.evaluator_url % (generic_utility.api_url, endpoints['/pathEvaluator']), post)
     jsn = json.loads(content)

@@ -45,10 +45,11 @@ def main(video_type):
     elif video_type == 'dynamic':
         add_dynamic_lists()
 
-    if video_type != 'dynamic' and generic_utility.get_setting('is_kid') == 'false':
-        root_list = lolomos.get_root_list()
-        mylist = lolomos.get_mylist(root_list)
-        add.directory(mylist[1].get('displayName'), 'list?&mylist', 'list_videos', '', video_type)
+#TODO: fix, temporarily disabled
+#    if video_type != 'dynamic' and generic_utility.get_setting('is_kid') == 'false':
+#        root_list = lolomos.get_root_list()
+#        mylist = lolomos.get_mylist(root_list)
+#        add.directory(mylist[1].get('displayName'), 'list?&mylist', 'list_videos', '', video_type)
 
     add.directory(generic_utility.get_string(30109), '', 'search', '', video_type)
     xbmcplugin.endOfDirectory(plugin_handle, cacheToDisc=False)

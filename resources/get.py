@@ -340,6 +340,7 @@ def genre_info(video_type):
         post_data = generic_utility.movie_genre % generic_utility.get_setting('authorization_url')
     else:
         pass
+    post_data = json.loads(post_data)
     content = connect.load_netflix_site(generic_utility.evaluator(), post=post_data)
     return content
 
@@ -357,6 +358,7 @@ def video_playback_info(video_datas):
         ids_str += '"'+video_data+'",'
     ids_str = ids_str[:-1]
     post_data = generic_utility.video_playback_info % (ids_str, generic_utility.get_setting('authorization_url'))
+    post_data = json.loads(post_data)
     content = connect.load_netflix_site(generic_utility.evaluator(), post=post_data)
     return content
 
