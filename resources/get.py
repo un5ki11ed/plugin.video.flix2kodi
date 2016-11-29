@@ -281,14 +281,14 @@ def genre_data(video_type):
     content = genre_info(video_type)
 
     matches = json.loads(content)['value']['genres']
-    for item in matches:
-        try:
-            match.append((unicode(matches[item]['id']), matches[item]['menuName']))
-        except Exception:
-            try:
-                match.append((unicode(matches[item]['summary']['id']), matches[item]['summary']['menuName']))
-            except Exception:
-                pass
+    filter_empty(matches)
+    #genre data for show subgenres
+    if len(matches) == 1:
+        matches = matches['83']['subgenres']
+    for key in matches:
+        item = matches['key']
+        if item.has_key('id') and item.has_key('name'):
+            match.append((unicode(item['id']), item['name']))
     return match
 
 
@@ -315,6 +315,7 @@ def genre_info(video_type):
         post_data = generic_utility.movie_genre % generic_utility.get_setting('authorization_url')
     else:
         pass
+    post_data = json.loads(post_data)
     content = connect.load_netflix_site(generic_utility.evaluator(), post=post_data)
     return content
 
@@ -332,6 +333,7 @@ def video_playback_info(video_datas):
         ids_str += '"'+video_data+'",'
     ids_str = ids_str[:-1]
     post_data = generic_utility.video_playback_info % (ids_str, generic_utility.get_setting('authorization_url'))
+    post_data = json.loads(post_data)
     content = connect.load_netflix_site(generic_utility.evaluator(), post=post_data)
     return content
 

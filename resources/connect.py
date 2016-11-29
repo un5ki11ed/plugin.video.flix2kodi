@@ -209,7 +209,11 @@ def load_site_internal(url, session, post=None, options=False, headers=None, coo
             generic_utility.error('error options! url: '+url)
             response.raise_for_status()
     if post:
-        response = session.post(url, headers=headers, cookies=cookies, data=post, verify=False)
+        if url == generic_utility.evaluator():
+            session.cookies['profilesNewSession']='0'
+            response = session.post(url, json = post)
+        else:
+            response = session.post(url, headers=headers, cookies=cookies, data=post, verify=False)
     else:
         response = session.get(url, headers=headers, cookies=cookies, verify=False)
 
