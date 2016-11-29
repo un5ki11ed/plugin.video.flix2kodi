@@ -286,7 +286,7 @@ def genre_data(video_type):
     if len(matches) == 1:
         matches = matches['83']['subgenres']
     for key in matches:
-        item = matches['key']
+        item = matches[key]
         if item.has_key('id') and item.has_key('name'):
             match.append((unicode(item['id']), item['name']))
     return match
